@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "957196760441",
+    "project_id": "buysell-4b6c7",
+    "storage_bucket": "buysell-4b6c7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:957196760441:android:abbb0fc4497c163fd2aba8",
+        "android_client_info": {
+          "package_name": "com.revyb.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXKQAdfrNCm7RfAdjtYTavcTc3yL7QurA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
