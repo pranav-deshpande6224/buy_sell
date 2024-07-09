@@ -1,10 +1,10 @@
-
 import 'package:buy_sell/authentication/screens/otp_screen.dart';
-//import 'package:buy_sell/authentication/screens/phone_number_screen.dart';
+import 'package:buy_sell/authentication/screens/phone_number_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

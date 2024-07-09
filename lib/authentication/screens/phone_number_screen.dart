@@ -1,15 +1,17 @@
+import 'package:buy_sell/authentication/provider/login_button_state_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class PhoneNumberScreen extends StatefulWidget {
+class PhoneNumberScreen extends ConsumerStatefulWidget {
   const PhoneNumberScreen({super.key});
 
   @override
-  State<PhoneNumberScreen> createState() => _PhoneNumberScreenState();
+  ConsumerState<PhoneNumberScreen> createState() => _PhoneNumberScreenState();
 }
 
-class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
+class _PhoneNumberScreenState extends ConsumerState<PhoneNumberScreen> {
   final _phoneNumberController = TextEditingController();
 
   @override
@@ -90,23 +92,38 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
                             ),
                           ),
                         ),
+                        onChanged: (value) {
+                          ref
+                              .read(buttonStateProvider.notifier)
+                              .changeStateOfButton(value);
+                        },
                       ),
                     ),
                     const SizedBox(height: 20),
                     SizedBox(
                       width: double.infinity,
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.white,
-                            backgroundColor: Colors.lightBlue,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
+                      child: Consumer(
+                        builder: (ctx, ref, child) {
+                          final value = ref.watch(buttonStateProvider);
+                          return ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.white,
+                              backgroundColor: Colors.lightBlue,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
                             ),
-                          ),
-                          onPressed: () {},
-                          child: Text("Login",
+                            onPressed: value == true ? () {} : null,
+                            child: Text(
+                              "Login",
                               style: GoogleFonts.comicNeue(
-                                  fontSize: 23, fontWeight: FontWeight.bold))),
+                                fontSize: 23,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
                     )
                   ],
                 ),
