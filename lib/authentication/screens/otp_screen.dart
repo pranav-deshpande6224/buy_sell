@@ -1,3 +1,5 @@
+import 'package:buy_sell/authentication/auth_handler.dart';
+import 'package:buy_sell/authentication/provider/auth_handler_provider.dart';
 import 'package:buy_sell/authentication/provider/otp_button_state_provider.dart';
 import 'package:buy_sell/authentication/provider/password_see_notsee.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +8,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class OtpScreen extends ConsumerStatefulWidget {
-  const OtpScreen({super.key});
+  const OtpScreen({
+    super.key,
+    required this.phoneNo,
+    required this.verificationId,
+  });
+  final String phoneNo;
+  final String verificationId;
 
   @override
   ConsumerState<OtpScreen> createState() {
@@ -16,6 +24,13 @@ class OtpScreen extends ConsumerStatefulWidget {
 
 class _OtpScreenState extends ConsumerState<OtpScreen> {
   final _otpController = TextEditingController();
+  late AuthHandler handler;
+
+  @override
+  void initState() {
+    handler = ref.read(authHandlerProvider);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +77,7 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
                         ),
                         children: [
                           TextSpan(
-                            text: '7989306224',
+                            text: widget.phoneNo,
                             style: GoogleFonts.comicNeue(
                               color: Colors.lightBlue,
                               fontSize: 18,
@@ -149,7 +164,15 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
                                 borderRadius: BorderRadius.circular(5),
                               ),
                             ),
-                            onPressed: value ? () {} : null,
+                            onPressed: value
+                                ? () {
+                                    handler.verifyOTP(
+                                      widget.verificationId,
+                                      _otpController.text,
+                                      ctx
+                                    );
+                                  }
+                                : null,
                             child: Text(
                               "Validate OTP",
                               style: GoogleFonts.comicNeue(
