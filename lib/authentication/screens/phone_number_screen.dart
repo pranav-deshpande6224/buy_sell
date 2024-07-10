@@ -1,3 +1,5 @@
+import 'package:buy_sell/authentication/auth_handler.dart';
+import 'package:buy_sell/authentication/provider/auth_handler_provider.dart';
 import 'package:buy_sell/authentication/provider/login_button_state_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,6 +15,13 @@ class PhoneNumberScreen extends ConsumerStatefulWidget {
 
 class _PhoneNumberScreenState extends ConsumerState<PhoneNumberScreen> {
   final _phoneNumberController = TextEditingController();
+  late AuthHandler handler;
+
+  @override
+  void initState() {
+    handler = ref.read(authHandlerProvider);
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -113,7 +122,12 @@ class _PhoneNumberScreenState extends ConsumerState<PhoneNumberScreen> {
                                 borderRadius: BorderRadius.circular(5),
                               ),
                             ),
-                            onPressed: value == true ? () {} : null,
+                            onPressed: value == true
+                                ? () {
+                                    handler.sendPhoneNoToDB(
+                                        _phoneNumberController.text, ctx);
+                                  }
+                                : null,
                             child: Text(
                               "Login",
                               style: GoogleFonts.comicNeue(
